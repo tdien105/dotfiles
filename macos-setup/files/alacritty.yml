@@ -36,5 +36,17 @@ colors:
 
 key_bindings:
   - { key: F,      mods: Command|Shift, action: ToggleSimpleFullscreen }
-  - { key: C,      mods: Control|Shift, action: Copy                   }
-  - { key: V,      mods: Control|Shift, action: Paste                  }
+  - { key: Q,      mods: Control,       chars: "\x11"                  }
+  - { key: Return, mods: Command,       chars: "\x1b\r"                }
+  - { key: H,      mods: Command,       chars: "\x1bh"                 }
+  - { key: J,      mods: Command,       chars: "\x1bj"                 }
+  - { key: K,      mods: Command,       chars: "\x1bk"                 }
+  - { key: L,      mods: Command,       chars: "\x1bl"                 }
+  - { key: F,      mods: Command,       chars: "\x1bf"                 }
+
+shell:
+  program: /bin/zsh
+  args:
+    - -l
+    - -c
+    - "tmux attach || tmux"
