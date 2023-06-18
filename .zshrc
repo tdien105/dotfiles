@@ -41,3 +41,9 @@ bindkey '^?' backward-delete-char
 
 # Aliases
 source $HOME/.aliases
+
+# General functions
+source $HOME/.functions
+
+# Private functions/scripts
+source $HOME/Axon/sources/private-scripts/.functions
