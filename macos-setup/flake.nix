@@ -17,7 +17,16 @@
 
   outputs = { self, nixpkgs, darwin, home-manager }: {
     darwinConfigurations = {
-      "SGN-DQQQ4VJH9Y" = darwin.lib.darwinSystem {
+      "SGN-DQQQ4VJH9Y" = darwin.lib.darwinSystem { #working machine
+        system = "aarch64-darwin";
+        modules = [
+          ./config.nix
+          home-manager.darwinModules.home-manager
+          ./sys-configs/axon.nix
+        ];
+        inputs = { inherit nixpkgs darwin home-manager; };
+      };
+      "192" = darwin.lib.darwinSystem { #tesing machine
         system = "aarch64-darwin";
         modules = [
           ./config.nix
