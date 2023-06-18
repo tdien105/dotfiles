@@ -26,6 +26,7 @@
     tree
     unzip
     watch
+    zoxide
   ];
 
   environment.systemPath = [
