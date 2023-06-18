@@ -1,8 +1,15 @@
+scrolling:
+  multiplier: 1
+
+cursor:
+  style:
+    blinking: On
+
 font:
   normal:
-    family: SauceCodePro Nerd Font Mono
+    family: FiraCode Nerd Font Mono
     style: Regular
-  size: 14.0
+  size: 12.0
 
 colors:
   normal:
@@ -26,21 +33,8 @@ colors:
   primary:
    background: '#282c34'
    foreground: '#abb2bf'
+
 key_bindings:
   - { key: F,      mods: Command|Shift, action: ToggleSimpleFullscreen }
-  - { key: Q,      mods: Control,       chars: "\x11"                  }
-  - { key: Return, mods: Command,       chars: "\x1b\r"                }
-  - { key: H,      mods: Command,       chars: "\x1bh"                 }
-  - { key: J,      mods: Command,       chars: "\x1bj"                 }
-  - { key: K,      mods: Command,       chars: "\x1bk"                 }
-  - { key: L,      mods: Command,       chars: "\x1bl"                 }
-  - { key: F,      mods: Command,       chars: "\x1bf"                 }
-
-working_directory: '/Users/dphan/Axon/sources'
-
-shell:
-  program: /bin/zsh
-  args:
-    - -l
-    - -c
-    - "tmux attach || tmux"
+  - { key: C,      mods: Control|Shift, action: Copy                   }
+  - { key: V,      mods: Control|Shift, action: Paste                  }
