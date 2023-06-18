@@ -22,16 +22,16 @@
         modules = [
           ./config.nix
           home-manager.darwinModules.home-manager
-          ./home/axon.nix
+          ./home/work.nix
         ];
         inputs = { inherit nixpkgs darwin home-manager; };
       };
-      "virtual" = darwin.lib.darwinSystem { #tesing machine
+      "192" = darwin.lib.darwinSystem { #tesing machine
         system = "aarch64-darwin";
         modules = [
           ./config.nix
           home-manager.darwinModules.home-manager
-          ./home/virtual.nix
+          ./home/test.nix
         ];
         inputs = { inherit nixpkgs darwin home-manager; };
       };
