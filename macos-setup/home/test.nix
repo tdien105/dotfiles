@@ -2,6 +2,10 @@
 
 {
   homebrew = {
+    brews = [
+      "pyenv"
+    ];
+
     casks = [
       "royal-tsx"
       "remote-desktop-manager"
