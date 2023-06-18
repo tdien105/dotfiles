@@ -4,11 +4,16 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep curl
   environment.systemPackages = with pkgs; [
+    aria
+    bat
+    cargo
+    colima
     curl
     direnv
     docker
     fd
     fzf
+    gh
     git
     gnupg
     go
@@ -16,8 +21,11 @@
     kubectl
     kubernetes-helm
     kustomize
+    mosh
     neovim
     nnn
+    nodePackages.npm
+    nodePackages.yarn
     nodejs
     pinentry
     rbw
