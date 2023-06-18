@@ -12,7 +12,7 @@
     ];
   };
 
-  users.users.virtual.home = /Users/virtual
+  users.users.virtual.home = /Users/virtual;
 
   home-manager = {
     useUserPackages = true;
