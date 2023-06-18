@@ -23,7 +23,7 @@
         terragrunt
         tflint
         yq-go
-        hiera-yaml
+        hiera-eyaml
       ];
     };
   };

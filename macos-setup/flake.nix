@@ -20,7 +20,7 @@
       "SGN-DQQQ4VJH9Y" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
-          ./configuration.nix
+          ./config.nix
           home-manager.darwinModules.home-manager
           ./sys-configs/axon.nix
         ];
