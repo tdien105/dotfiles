@@ -12,6 +12,8 @@
     ];
   };
 
+  users.users.virtual.home = /Users/virtual
+
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = true;
