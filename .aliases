@@ -1,15 +1,7 @@
 #general
 alias ll='ls -Flha'
 alias v='nvim'
-
-#axon alias
-alias agov='az cloud set --name AzureUSGovernment'
-alias acom='az cloud set --name AzureCloud'
-alias fmt='/usr/local/bin/terraform fmt -recursive'
-alias hcl='/usr/local/bin/terragrunt hclfmt'
-alias kb='/opt/homebrew/bin/kubectx'
-alias tf='/opt/homebrew/bin/tfswitch'
-
+alias qq='exit'
 
 ### Common K8s alias
 alias k='kubectl'

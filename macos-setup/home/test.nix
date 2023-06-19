@@ -4,6 +4,7 @@
   homebrew = {
     brews = [
       "pyenv"
+      "tfswitch"
     ];
 
     casks = [
@@ -30,6 +31,7 @@
         tflint
         yq-go
         hiera-eyaml
+        terraform
       ];
     };
   };
