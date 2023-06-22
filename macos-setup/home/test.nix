@@ -4,7 +4,7 @@
   homebrew = {
     brews = [
       "pyenv"
-      "warrensbox/tap/tfswitch"
+      "tfenv"
     ];
 
     casks = [
