@@ -63,10 +63,7 @@
       # "foobar"
     ];
     casks = [
-      "alacritty" # TODO https://github.com/neovim/neovim/issues/3344
-      "brave-browser"
-      "utm"
-      "visual-studio-code"
+      #foobar
     ];
   };
 

@@ -10,20 +10,36 @@
     casks = [
       "royal-tsx"
       "remote-desktop-manager"
+      "viscosity"
+      "slack"
       "1password"
-      "microsoft-onenote"
+      "1password-cli"
+      "zoom"
+      "sublime-text"
       "notion"
+      "microsoft-onenote"
+      "microsoft-word"
+      "microsoft-excel"
+      "microsoft-outlook"
+      "microsoft-powerpoint"
+      "spotify"
       "openkey"
       "logitech-options"
+      "telegram"
+      "alacritty" # TODO https://github.com/neovim/neovim/issues/3344
+      "brave-browser"
+      "utm"
+      "visual-studio-code"
     ];
   };
 
-  users.users.virtual.home = /Users/dphan;
+  users.users.dphan.home = /Users/dphan;
 
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = true;
     users.dphan = { pkgs, lib, ... }: {
+      manual.manpages.enable = false;
       home.stateVersion = "22.11";
       programs.home-manager.enable = true;
       home.file.".config/alacritty/alacritty.yml".text = builtins.readFile ../files/alacritty.yml;
@@ -37,9 +53,6 @@
         yq-go
         hiera-eyaml
         terraform
-        sublime4
-        spotify
-        telegram-desktop
       ];
     };
   };
