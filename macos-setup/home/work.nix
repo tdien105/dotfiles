@@ -33,6 +33,11 @@
   };
 
   users.users.dphan.home = /Users/dphan;
+  # #keyboard settings
+  # system.defaults.NSGlobalDomain.InitialKeyRepeat = 3; #This sets how long you must hold down the key before it starts repeating.
+  # system.defaults.NSGlobalDomain.KeyRepeat = 1; #This sets how fast it repeats once it starts.
+  # system.defaults.trackpad.Dragging = true;
+  # system.defaults.trackpad.TrackpadThreeFingerDrag = true;
 
   home-manager = {
     useUserPackages = true;
