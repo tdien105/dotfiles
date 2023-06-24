@@ -8,7 +8,6 @@
     ];
 
     casks = [
-      "royal-tsx"
       "remote-desktop-manager"
       "viscosity"
       "slack"

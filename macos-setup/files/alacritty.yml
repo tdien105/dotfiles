@@ -50,3 +50,5 @@ shell:
     - -l
     - -c
     - "tmux attach || tmux"
+
+#binding cmd+h: https://github.com/alacritty/alacritty/issues/5346#issuecomment-1055695103
