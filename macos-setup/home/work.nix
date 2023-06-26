@@ -29,6 +29,7 @@
       "brave-browser"
       "utm"
       "visual-studio-code"
+      "zalo"
     ];
   };
 
