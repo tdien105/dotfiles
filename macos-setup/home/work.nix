@@ -9,18 +9,10 @@
 
     casks = [
       "remote-desktop-manager"
-      "viscosity"
-      "slack"
       "1password"
       "1password-cli"
-      "zoom"
       "sublime-text"
       "notion"
-      "microsoft-onenote"
-      "microsoft-word"
-      "microsoft-excel"
-      "microsoft-outlook"
-      "microsoft-powerpoint"
       "spotify"
       "openkey"
       "logitech-options"
@@ -39,6 +31,8 @@
   # system.defaults.NSGlobalDomain.KeyRepeat = 1; #This sets how fast it repeats once it starts.
   # system.defaults.trackpad.Dragging = true;
   # system.defaults.trackpad.TrackpadThreeFingerDrag = true;
+  system.defaults.dock.minimize-to-application = true;
+  system.defaults.dock.orientation = "left";
 
   home-manager = {
     useUserPackages = true;
