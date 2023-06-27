@@ -5,6 +5,9 @@
     brews = [
       "pyenv"
       "tfenv"
+      "freetds"
+      "cython"
+      "openssl"
     ];
 
     casks = [

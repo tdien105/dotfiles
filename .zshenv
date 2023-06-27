@@ -28,3 +28,8 @@ export FZF_DEFAULT_COMMAND='fd --type file --strip-cwd-prefix'
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+
+# workaround for: https://stackoverflow.com/questions/70333903/error-could-not-build-wheels-for-pymssql-which-is-required-to-install-pyprojec
+export LDFLAGS="-L/opt/homebrew/opt/freetds/lib -L/opt/homebrew/opt/openssl@3/lib"
+export CFLAGS="-I/opt/homebrew/opt/freetds/include"
+export CPPFLAGS="-I/opt/homebrew/opt/openssl@3/include"
