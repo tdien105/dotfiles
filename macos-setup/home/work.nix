@@ -57,6 +57,7 @@
         hiera-eyaml
         terraform
         sqlcmd
+        kubelogin
       ];
     };
   };
