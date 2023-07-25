@@ -62,6 +62,7 @@
         wimlib
         cdrtools
         chntpw
+        gawk
       ];
     };
   };
