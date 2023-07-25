@@ -26,6 +26,7 @@
       "utm"
       "visual-studio-code"
       "zalo"
+      "kitty"
     ];
   };
 
@@ -55,9 +56,12 @@
         tflint
         yq-go
         hiera-eyaml
-        terraform
         sqlcmd
         kubelogin
+        cabextract
+        wimlib
+        cdrtools
+        chntpw
       ];
     };
   };
