@@ -313,6 +313,7 @@ return require("lazy").setup({
                     "terraform",
                     "typescript",
                     "yaml",
+                    "puppet",
                 },
                 highlight = {
                     enable = true,

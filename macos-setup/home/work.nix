@@ -63,6 +63,9 @@
         cdrtools
         chntpw
         gawk
+        pwgen
+        powershell
+        ansible
       ];
     };
   };
