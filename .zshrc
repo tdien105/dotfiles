@@ -8,15 +8,13 @@ zinit light romkatv/powerlevel10k
 
 # Plugin list
 zinit lucid light-mode depth=1 nocd for \
-    atinit='zicompinit' zdharma-continuum/fast-syntax-highlighting \
     atload='_zsh_autosuggest_start' zsh-users/zsh-autosuggestions \
     atload='MODE_CURSOR_VIINS="bar"; vim-mode-cursor-init-hook' softmoth/zsh-vim-mode \
     hlissner/zsh-autopair
 zinit lucid is-snippet for \
-    https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
-    # https://github.com/ahmetb/kubectl-aliases/blob/master/.kubectl_aliases \
-    # https://github.com/ajeetdsouza/zoxide/blob/main/zoxide.plugin.zsh \
-    # as='completion' https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
+    https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh \
+    https://github.com/ajeetdsouza/zoxide/blob/main/zoxide.plugin.zsh \
+    as='completion' https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
 
 # Options
 setopt \
@@ -47,3 +45,4 @@ source $HOME/.functions
 
 # Private functions/scripts
 source $HOME/Axon/sources/private-scripts/.functions
+export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"

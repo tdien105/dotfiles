@@ -3,12 +3,13 @@
 {
   homebrew = {
     brews = [
-      "pyenv"
       "tfenv"
       "freetds"
       "cython"
       "openssl"
       "mysql-client"
+      "mysql@8.0"
+      "percona-xtrabackup"
     ];
 
     casks = [
@@ -49,6 +50,7 @@
       home.file.".config/alacritty/alacritty.yml".text = builtins.readFile ../files/alacritty.yml;
       home.file.".config/karabiner/karabiner.json".text = builtins.readFile ../files/karabiner.json;
       home.packages = with pkgs; [
+        python310
         azure-cli
         kubectx
         sops
@@ -65,7 +67,7 @@
         gawk
         pwgen
         powershell
-        ansible
+        sshpass 
       ];
     };
   };
