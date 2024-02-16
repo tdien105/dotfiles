@@ -2,9 +2,9 @@
 export PATH="$PATH:/opt/local/bin:$HOME/.local/bin"
 
 # Input method
-# export GTK_IM_MODULE=ibus
-# export QT_IM_MODULE=ibus
-# export XMODIFIERS=@im=ibus
+export GTK_IM_MODULE=ibus
+export QT_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
 
 # Vim
 export EDITOR=nvim
@@ -32,4 +32,6 @@ export FZF_DEFAULT_COMMAND='fd --type file --strip-cwd-prefix'
 # workaround for: https://stackoverflow.com/questions/70333903/error-could-not-build-wheels-for-pymssql-which-is-required-to-install-pyprojec
 # export LDFLAGS="-L/opt/homebrew/opt/freetds/lib -L/opt/homebrew/opt/openssl@3/lib"
 # export CFLAGS="-I/opt/homebrew/opt/freetds/include"
-# export CPPFLAGS="-I/opt/homebrew/opt/openssl@3/include"
+# export CPPFLAGS="-I/opt/homebrew/opt/openssl@3/inclue"
+
+export PATH="$PATH:/Users/dphan/Library/Python/3.9/bin"

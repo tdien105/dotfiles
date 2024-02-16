@@ -2,6 +2,7 @@
 alias ll='ls -Flha'
 alias v='nvim'
 alias qq='exit'
+alias python="$(which python3)"
 
 ### Common K8s alias
 alias k='kubectl'

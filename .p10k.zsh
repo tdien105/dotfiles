@@ -49,7 +49,7 @@ typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=0
 
 # kubecontext TODO
 typeset -g POWERLEVEL9K_KUBECONTEXT_FOREGROUND=0
-# typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|istioctl'
+typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|istioctl'
 
 # aws
 typeset -g POWERLEVEL9K_AWS_SHOW_ON_COMMAND='aws|terraform'

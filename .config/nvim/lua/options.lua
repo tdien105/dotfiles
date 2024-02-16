@@ -33,3 +33,4 @@ vim.opt.linebreak = true -- wrap long lines at a character in 'breakat' rather t
 vim.opt.scrolloff = 3 -- minimal number of screen lines to keep above and below the cursor
 vim.opt.sidescrolloff = 3 -- minimal number of screen columns to keep to the left and right of the cursor if wrap is `false`
 vim.opt.shortmess:append("c") -- hide all the completion messages, e.g. "-- XXX completion (YYY)", "match 1 of 2", "The only match", "Pattern not found"
+vim.opt.sessionoptions:get()

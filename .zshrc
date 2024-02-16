@@ -10,11 +10,13 @@ zinit light romkatv/powerlevel10k
 zinit lucid light-mode depth=1 nocd for \
     atload='_zsh_autosuggest_start' zsh-users/zsh-autosuggestions \
     atload='MODE_CURSOR_VIINS="bar"; vim-mode-cursor-init-hook' softmoth/zsh-vim-mode \
-    hlissner/zsh-autopair
+    hlissner/zsh-autopair \
+    zsh-users/zsh-completions \
+    zdharma-continuum/fast-syntax-highlighting
 zinit lucid is-snippet for \
     https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh \
-    https://github.com/ajeetdsouza/zoxide/blob/main/zoxide.plugin.zsh \
-    as='completion' https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
+    https://github.com/ajeetdsouza/zoxide/blob/main/zoxide.plugin.zsh
+    
 
 # Options
 setopt \
@@ -33,9 +35,7 @@ HISTSIZE=10000
 SAVEHIST=10000
 
 # Key bindings
-# export KEYTIMEOUT=1
-# bindkey '^[[P' delete-char
-# bindkey '^?' backward-delete-char
+export KEYTIMEOUT=1
 
 # Aliases
 source $HOME/.aliases
