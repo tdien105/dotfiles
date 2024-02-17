@@ -66,7 +66,18 @@
         gawk
         pwgen
         powershell
-        sshpass 
+        sshpass
+        ansible
+        python310Packages.pip
+        (python310.withPackages (p: with p; [
+          requests
+          pyyaml
+          pymysql
+          cassandra-driver
+          kafka-python
+          prometheus_client
+          pyodbc
+        ]))
       ];
     };
   };
