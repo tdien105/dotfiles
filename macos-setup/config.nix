@@ -13,7 +13,6 @@
     docker
     fd
     fzf
-    gh
     git
     gnupg
     go
@@ -101,9 +100,9 @@
     };
   };
 
-  services.karabiner-elements = {
-    enable = true;
-  };
+  # services.karabiner-elements = {
+  #   enable = true;
+  # };
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;

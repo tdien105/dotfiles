@@ -152,6 +152,7 @@ return require("lazy").setup({
                     "tflint",
                     "tsserver",
                     "yamlls",
+                    "helm_ls",
                 },
             })
 

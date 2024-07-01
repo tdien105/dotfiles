@@ -10,6 +10,7 @@
       "mysql-client"
       "mysql@8.0"
       "percona-xtrabackup"
+      "gh"
     ];
 
     casks = [
@@ -28,6 +29,7 @@
       "visual-studio-code"
       "zalo"
       "kitty"
+      "mac-mouse-fix"
     ];
   };
 
@@ -48,7 +50,7 @@
       home.stateVersion = "22.11";
       programs.home-manager.enable = true;
       home.file.".config/alacritty/alacritty.yml".text = builtins.readFile ../files/alacritty.yml;
-      home.file.".config/karabiner/karabiner.json".text = builtins.readFile ../files/karabiner.json;
+      # home.file.".config/karabiner/karabiner.json".text = builtins.readFile ../files/karabiner.json;
       home.packages = with pkgs; [
         azure-cli
         kubectx
@@ -67,17 +69,6 @@
         pwgen
         powershell
         sshpass
-        ansible
-        python310Packages.pip
-        (python310.withPackages (p: with p; [
-          requests
-          pyyaml
-          pymysql
-          cassandra-driver
-          kafka-python
-          prometheus_client
-          pyodbc
-        ]))
       ];
     };
   };

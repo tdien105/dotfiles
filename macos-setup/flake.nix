@@ -17,7 +17,7 @@
 
   outputs = { self, nixpkgs, darwin, home-manager }: {
     darwinConfigurations = {
-      "SGN-DQQQ4VJH9Y" = darwin.lib.darwinSystem { #working machine
+      "AS-DQQQ4VJH9Y" = darwin.lib.darwinSystem { #working machine
         system = "aarch64-darwin";
         modules = [
           ./config.nix
