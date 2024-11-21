@@ -34,6 +34,7 @@
     unzip
     watch
     zoxide
+    colima
   ];
 
   environment.systemPath = [

@@ -11,6 +11,8 @@
       "mysql@8.0"
       "percona-xtrabackup"
       "gh"
+      "cmctl"
+      "tox"
     ];
 
     casks = [
