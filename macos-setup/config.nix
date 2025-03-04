@@ -7,7 +7,6 @@
     aria
     bat
     cargo
-    colima
     curl
     direnv
     docker
@@ -29,12 +28,10 @@
     pinentry
     rbw
     ripgrep
-    tmux
     tree
     unzip
     watch
     zoxide
-    colima
   ];
 
   environment.systemPath = [
@@ -86,18 +83,6 @@
       NSAutomaticPeriodSubstitutionEnabled = false;
       NSAutomaticQuoteSubstitutionEnabled = false;
       NSAutomaticSpellingCorrectionEnabled = false;
-    };
-    CustomUserPreferences = {
-      "com.apple.Safari" = {
-        AlwaysRestoreSessionAtLaunch = true;
-        AutoOpenSafeDownloads = false;
-        EnableNarrowTabs = false;
-        IncludeDevelopMenu = true;
-        NeverUseBackgroundColorInToolbar = true;
-        ShowFullURLInSmartSearchField = true;
-        ShowOverlayStatusBar = true;
-        ShowStandaloneTabBar = false;
-      };
     };
   };
 
