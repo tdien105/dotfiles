@@ -12,6 +12,7 @@
       "gh"
       "cmctl"
       "tox"
+      "pinentry"
     ];
 
     casks = [
@@ -66,6 +67,7 @@
         pwgen
         powershell
         sshpass
+        tfk8s
       ];
     };
   };

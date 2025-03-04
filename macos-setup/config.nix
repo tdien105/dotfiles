@@ -25,7 +25,6 @@
     nodePackages.npm
     nodePackages.yarn
     nodejs
-    pinentry
     rbw
     ripgrep
     tree
@@ -39,12 +38,9 @@
   ];
 
   fonts = {
-    fontDir.enable = true;
-    fonts = [
-      (pkgs.nerdfonts.override {
-        fonts = [
-          "FiraCode"
-        ];
+    packages = with pkgs; [
+      (nerdfonts.override {
+        fonts = [ "FiraCode" ];
       })
     ];
   };
@@ -95,8 +91,8 @@
 
   nix = {
     # configureBuildUsers = true;
+    optimise.automatic = true;
     settings = {
-      auto-optimise-store = true;
       experimental-features = [
         "nix-command"
         "flakes"
