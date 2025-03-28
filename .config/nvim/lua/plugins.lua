@@ -17,16 +17,6 @@ return require("lazy").setup({
         "https://github.com/nvim-lua/plenary.nvim",
         lazy = true,
     },
-
-    {
-        "https://github.com/kyazdani42/nvim-web-devicons",
-        lazy = true,
-    },
-
-    {
-        "https://github.com/MunifTanjim/nui.nvim",
-        lazy = true,
-    },
     -- }}}
 
     -- {{{ UI
@@ -35,56 +25,23 @@ return require("lazy").setup({
         priority = 1000,
         config = function()
             require("onedark").setup({
-                transparent = vim.env.TMUX ~= nil,
+                transparent = true,
             })
             require("onedark").load()
         end,
     },
 
     {
-        "https://github.com/nvim-lualine/lualine.nvim",
-        event = "VeryLazy",
-        config = function()
-            require("lualine").setup({
-                options = {
-                    globalstatus = true,
-                },
-            })
-        end,
-    },
-
-    {
-        "https://github.com/akinsho/bufferline.nvim",
-        event = "VeryLazy",
-        config = function()
-            require("bufferline").setup({
-                options = {
-                    always_show_bufferline = false,
-                },
-            })
-        end,
-    },
-
-    {
         "https://github.com/lukas-reineke/indent-blankline.nvim",
-        event = { "BufReadPost", "BufNewFile" },
-        config = function()
-            require("indent_blankline").setup({
-                show_current_context = true,
-                show_first_indent_level = false,
-                show_trailing_blankline_indent = false,
-                use_treesitter = true,
-            })
-        end,
-    },
-
-    {
-        "https://github.com/j-hui/fidget.nvim",
         event = "VeryLazy",
         config = function()
-            require("fidget").setup({
-                text = {
-                    spinner = "dots",
+            require("ibl").setup({
+                indent = {
+                    char = "▏",
+                    tab_char = "→",
+                },
+                scope = {
+                    enabled = false,
                 },
             })
         end,
@@ -93,228 +50,135 @@ return require("lazy").setup({
 
     -- {{{ Search
     {
-        "https://github.com/junegunn/fzf.vim",
+        "https://github.com/ibhagwan/fzf-lua",
         event = "VeryLazy",
-        dependencies = {
-            "https://github.com/junegunn/fzf",
-        },
         config = function()
-            vim.g.fzf_buffers_jump = 1
+            require("fzf-lua").setup({
+                "max-perf",
+                winopts = {
+                    height = 0.5,
+                    width = 1,
+                    row = 1,
+                },
+            })
+            require("fzf-lua").register_ui_select()
         end,
     },
 
     {
-        "https://github.com/stevearc/dressing.nvim",
-        event = "VeryLazy",
+        "https://github.com/MagicDuck/grug-far.nvim",
+        lazy = true,
+        config = function()
+            require("grug-far").setup({})
+        end,
     },
     -- }}}
 
     -- {{{ File manager
     {
-        "stevearc/oil.nvim",
+        "https://github.com/stevearc/oil.nvim",
         cmd = "Oil",
         config = function()
-            require("oil").setup({
+            local oil = require("oil")
+            oil.setup({
                 columns = {},
                 view_options = {
                     show_hidden = true,
+                    is_always_hidden = function(name, bufnr)
+                        return name == ".."
+                    end,
+                },
+                win_options = {
+                    concealcursor = "nvic",
                 },
             })
+        end,
+    },
+
+    {
+        "https://github.com/ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        event = "VeryLazy",
+        config = function()
+            local harpoon = require("harpoon")
+            harpoon:setup()
+
+            for i = 1, 5 do
+                vim.keymap.set("n", "<C-" .. i .. ">", function()
+                    harpoon:list():select(i)
+                end)
+            end
         end,
     },
     -- }}}
 
     -- {{{ IntelliSense
     {
-        "https://github.com/williamboman/mason-lspconfig.nvim",
-        event = { "BufReadPost", "BufNewFile" },
-        dependencies = {
-            "https://github.com/williamboman/mason.nvim",
-            "https://github.com/neovim/nvim-lspconfig",
-        },
+        "https://github.com/Saghen/blink.cmp",
+        version = "v0.*",
+        event = "VeryLazy",
         config = function()
-            require("mason").setup()
-            require("mason-lspconfig").setup({
-                ensure_installed = {
-                    "bashls",
-                    "bufls",
-                    "cssls",
-                    "dockerls",
-                    "gopls",
-                    "grammarly",
-                    "html",
-                    "jsonls",
-                    "lua_ls",
-                    "pyright",
-                    "rnix",
-                    "rust_analyzer",
-                    "terraformls",
-                    "tflint",
-                    "tsserver",
-                    "yamlls",
-                    "helm_ls",
+            require("blink.cmp").setup({
+                keymap = {
+                    preset = "enter",
+                },
+                cmdline = {
+                    keymap = {
+                        preset = "super-tab",
+                    },
                 },
             })
+        end,
+    },
 
-            local on_attach = function(client, bufnr)
-                -- TODO clean up
-                local opts = { noremap = true, silent = true, buffer = bufnr }
-                vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-                vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-                vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-                vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-                vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-                vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
-                vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
-                vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
-                vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, opts)
-                vim.keymap.set("n", "<space>=", function()
-                    vim.lsp.buf.format({ async = true })
-                end, opts)
+    {
+        "https://github.com/neovim/nvim-lspconfig",
+        event = "VeryLazy",
+        config = function()
+            -- Requires language servers to be already installed
+            -- :help lspconfig-all
+            local servers = {
+                gopls = {},
+                lua_ls = {},
+                nil_ls = {},
+                pyright = {},
+                rust_analyzer = {},
+                terraformls = {},
+                ts_ls = {},
+            }
+
+            local lspconfig = require("lspconfig")
+            for server, config in pairs(servers) do
+                config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+                lspconfig[server].setup(config)
             end
 
-            require("mason-lspconfig").setup_handlers({
-                function(server_name)
-                    require("lspconfig")[server_name].setup({
-                        on_attach = on_attach,
-                        capabilities = require("cmp_nvim_lsp").default_capabilities(),
-                    })
-                end,
-            })
-        end,
-    },
-    -- }}}
-
-    -- {{{ Completion
-    {
-        "https://github.com/hrsh7th/nvim-cmp",
-        event = "VeryLazy",
-        dependencies = {
-            "https://github.com/hrsh7th/cmp-buffer",
-            "https://github.com/hrsh7th/cmp-nvim-lsp",
-            "https://github.com/hrsh7th/cmp-path",
-            "https://github.com/saadparwaiz1/cmp_luasnip",
-        },
-        config = function()
-            local has_words_before = function()
-                unpack = unpack or table.unpack
-                local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-                return col ~= 0
-                    and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-            end
-
-            local cmp = require("cmp")
-            local luasnip = require("luasnip")
-
-            cmp.setup({
-                mapping = cmp.mapping.preset.insert({
-                    ["<CR>"] = cmp.mapping.confirm(),
-                    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-                    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-                    ["<Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_next_item()
-                        elseif luasnip.expand_or_jumpable() then
-                            luasnip.expand_or_jump()
-                        elseif has_words_before() then
-                            cmp.complete()
-                        else
-                            fallback()
-                        end
-                    end, { "i", "s" }),
-                    ["<S-Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_prev_item()
-                        elseif luasnip.jumpable(-1) then
-                            luasnip.jump(-1)
-                        else
-                            fallback()
-                        end
-                    end, { "i", "s" }),
-                    ["<C-l>"] = cmp.mapping(function()
-                        vim.api.nvim_feedkeys(
-                            vim.fn["copilot#Accept"](vim.api.nvim_replace_termcodes("<Tab>", true, true, true)),
-                            "n",
-                            true
-                        )
-                    end),
-                }),
-                snippet = {
-                    expand = function(args)
-                        require("luasnip").lsp_expand(args.body)
-                    end,
-                },
-                sources = cmp.config.sources({
-                    { name = "lua_snip" },
-                    { name = "nvim_lsp" },
-                    { name = "buffer" },
-                    { name = "path" },
-                }),
-                experimental = {
-                    ghost_text = false, -- Conflict with Copilot
-                },
-            })
+            -- HACK manually start LSP server after lazy load
+            vim.cmd("filetype detect")
         end,
     },
 
-    {
-        "https://github.com/L3MON4D3/LuaSnip",
-        event = "VeryLazy",
-        dependencies = {
-            "https://github.com/rafamadriz/friendly-snippets",
-        },
-        config = function()
-            require("luasnip.loaders.from_vscode").lazy_load()
-        end,
-    },
-
-    {
-        "https://github.com/windwp/nvim-autopairs",
-        event = { "BufReadPost", "BufNewFile" },
-        config = function()
-            require("nvim-autopairs").setup({
-                check_ts = true,
-            })
-        end,
-    },
-
-    {
-        "https://github.com/github/copilot.vim",
-        event = { "BufReadPost", "BufNewFile" },
-        config = function()
-            vim.g.copilot_no_tab_map = true
-            vim.keymap.set("i", "<Plug>(vimrc:copilot-dummy-map)", "copilot#Accept()", { silent = true, expr = true })
-        end,
-    },
-    -- }}}
-
-    -- {{{ Syntax highlighting
+    -- TODO refactor when Tree-sitter is stable and merged to nvim core
+    -- https://github.com/nvim-treesitter/nvim-treesitter/issues/4767
     {
         "https://github.com/nvim-treesitter/nvim-treesitter",
-        event = { "BufReadPost", "BufNewFile" },
+        build = ":TSUpdate",
+        event = "VeryLazy",
         config = function()
             require("nvim-treesitter.configs").setup({
                 ensure_installed = {
-                    "bash",
-                    "dockerfile",
-                    "gitcommit",
+                    "cue",
                     "go",
                     "hcl",
-                    "javascript",
-                    "json",
-                    "json5",
-                    "jsonnet",
-                    "latex",
-                    "lua",
+                    "kdl",
                     "nix",
-                    "proto",
+                    "puppet",
                     "python",
-                    "rego",
                     "rust",
                     "terraform",
+                    "tsx",
                     "typescript",
-                    "yaml",
-                    "puppet",
+                    "vimdoc",
                 },
                 highlight = {
                     enable = true,
@@ -325,140 +189,59 @@ return require("lazy").setup({
             })
         end,
     },
-    -- }}}
 
-    -- {{{ Formatting
     {
-        "https://github.com/sbdchd/neoformat",
-        cmd = "Neoformat",
+        "https://github.com/windwp/nvim-autopairs",
+        event = "InsertEnter",
         config = function()
-            vim.g.neoformat_try_node_exe = true
-        end,
-    },
-    -- }}}
-
-    -- {{{ Debugging
-    -- TODO
-    {
-        "https://github.com/mfussenegger/nvim-dap",
-        lazy = true,
-    },
-
-    {
-        "https://github.com/rcarriga/nvim-dap-ui",
-        lazy = true,
-    },
-
-    {
-        "https://github.com/ravenxrz/DAPInstall.nvim",
-        lazy = true,
-    },
-    -- }}}
-
-    -- {{{ Markdown
-    {
-        "https://github.com/iamcco/markdown-preview.nvim",
-        ft = "markdown",
-        build = "cd app && yarn install",
-    },
-
-    {
-        "https://github.com/jakewvincent/mkdnflow.nvim",
-        ft = "markdown",
-        config = function()
-            require("mkdnflow").setup({
-                to_do = {
-                    symbols = { " ", "-", "x" },
-                },
-            })
+            require("nvim-autopairs").setup()
         end,
     },
     -- }}}
 
     -- {{{ Git
     {
-        "https://github.com/TimUntersberger/neogit",
-        cmd = "Neogit",
-        config = function()
-            require("neogit").setup({
-                disable_commit_confirmation = true,
-                kind = "split",
-                integrations = {
-                    diffview = true,
-                },
-            })
-        end,
+        "https://github.com/tpope/vim-fugitive",
+        cmd = "Git",
     },
 
     {
-        "https://github.com/pwntester/octo.nvim",
-        cmd = "Octo",
-        config = function()
-            require("octo").setup()
-        end,
-    },
-
-    {
-        "https://github.com/lewis6991/gitsigns.nvim",
+        "https://github.com/echasnovski/mini.diff",
         event = "VeryLazy",
         config = function()
-            require("gitsigns").setup({
-                current_line_blame = true,
-            })
+            require("mini.diff").setup({})
         end,
-    },
-
-    {
-        "https://github.com/sindrets/diffview.nvim",
-        cmd = {
-            "DiffviewFileHistory",
-        },
     },
     -- }}}
 
     -- {{{ Motions
     {
-        "https://github.com/ggandor/leap.nvim",
+        "https://github.com/folke/flash.nvim",
         event = "VeryLazy",
         config = function()
-            require("leap").set_default_keymaps()
-            vim.api.nvim_set_hl(0, "LeapBackdrop", {
-                link = "Comment",
-            })
-            vim.api.nvim_set_hl(0, "LeapMatch", {
-                fg = "white",
-                bold = true,
-                nocombine = true,
-            })
-            vim.api.nvim_set_hl(0, "LeapLabelPrimary", {
-                fg = "yellow",
-                bold = true,
-                nocombine = true,
-            })
-            vim.api.nvim_set_hl(0, "LeapLabelSecondary", {
-                fg = "magenta",
-                bold = true,
-                nocombine = true,
+            require("flash").setup({
+                modes = {
+                    search = {
+                        enabled = true,
+                    },
+                    char = {
+                        enabled = false,
+                    },
+                },
+                highlight = {
+                    groups = {
+                        label = "Question",
+                    },
+                },
             })
         end,
     },
-    -- }}}
-
-    -- {{{ Keymaps
-    {
-        "https://github.com/folke/which-key.nvim",
-        lazy = true,
-    },
 
     {
-        "https://github.com/mrjones2014/legendary.nvim",
-        cmd = "Legendary",
+        "https://github.com/echasnovski/mini.surround",
+        event = "VeryLazy",
         config = function()
-            require("legendary").setup({
-                which_key = {
-                    auto_register = true,
-                },
-            })
+            require("mini.surround").setup({})
         end,
     },
     -- }}}
@@ -471,7 +254,10 @@ return require("lazy").setup({
 
     {
         "https://github.com/tpope/vim-sleuth",
-        event = { "BufReadPost", "BufNewFile" },
+        event = "VeryLazy",
+        config = function()
+            vim.cmd("silent Sleuth")
+        end,
     },
 
     {
@@ -480,55 +266,24 @@ return require("lazy").setup({
     },
 
     {
-        "https://github.com/tpope/vim-eunuch",
-        event = "VeryLazy",
-    },
-
-    {
-        "https://github.com/mbbill/undotree",
-        cmd = {
-            "UndotreeShow",
-            "UndotreeToggle",
-        },
-    },
-
-    {
         "https://github.com/numToStr/Comment.nvim",
         event = "VeryLazy",
         config = function()
-            require("Comment").setup({})
+            require("Comment").setup()
         end,
     },
 
     {
-        "https://github.com/christoomey/vim-tmux-navigator",
-        event = "VeryLazy",
-        config = function()
-            vim.g.tmux_navigator_no_mappings = 1
-            vim.keymap.set("n", "<M-h>", ":TmuxNavigateLeft<cr>", { silent = true })
-            vim.keymap.set("n", "<M-j>", ":TmuxNavigateDown<cr>", { silent = true })
-            vim.keymap.set("n", "<M-k>", ":TmuxNavigateUp<cr>", { silent = true })
-            vim.keymap.set("n", "<M-l>", ":TmuxNavigateRight<cr>", { silent = true })
-        end,
-    },
-
-    {
-        "echasnovski/mini.bufremove",
+        "https://github.com/echasnovski/mini.bufremove",
         lazy = true,
-        config = function()
-            require("mini.bufremove").setup()
-        end,
     },
+    -- }}}
+
+    -- {{{ Keymaps
     {
-      "folke/persistence.nvim",
-      event = "BufReadPre",
-      opts = { options = vim.opt.sessionoptions:get() },
-      -- stylua: ignore
-      keys = {
-        { "<leader>qs", function() require("persistence").load() end, desc = "Restore Session" },
-        { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
-        { "<leader>qd", function() require("persistence").stop() end, desc = "Don't Save Current Session" },
-      },
-    }
+        "https://github.com/folke/which-key.nvim",
+        event = "VeryLazy",
+        keys = require("keymaps"),
+    },
     -- }}}
 })

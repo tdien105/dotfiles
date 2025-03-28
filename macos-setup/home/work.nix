@@ -13,6 +13,7 @@
       "cmctl"
       "tox"
       "pinentry"
+      "pyenv"
     ];
 
     casks = [

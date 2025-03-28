@@ -1,123 +1,101 @@
 -- Remap space as leader key
-vim.keymap.set("", "<Space>", "<Nop>", { silent = true })
 vim.g.mapleader = " "
 
-local keymaps = {
-    ["<Leader>"] = {
-        b = {
-            name = "buffer",
-            b = { ":Buffers!<cr>", "Switch buffer" },
-            n = { ":bnext<cr>", "Next buffer" },
-            p = { ":bprevious<cr>", "Previous buffer" },
-            d = {
-                function()
-                    require("mini.bufremove").delete(0, false)
-                end,
-                "Delete buffer",
-            },
-            l = { ":b#<cr>", "Switch to last buffer" },
-        },
-        f = {
-            name = "file",
-            f = { ":Files!<cr>", "Find file" },
-            F = { ":Files! " .. vim.fn.expand("%:p:h"), "Find file from here", silent = false },
-            g = { ":GitFiles!<cr>", "Find file in git project" },
-            s = { ":update<cr>", "Save" },
-            y = {
-                function()
-                    local path = vim.fn.expand("%:p:~")
-                    vim.fn.setreg("+", path)
-                    print("Copied path: " .. path)
-                end,
-                "Yank file path",
-            },
-            Y = {
-                function()
-                    local path = vim.fn.expand("%")
-                    vim.fn.setreg("+", path)
-                    print("Copied path: " .. path)
-                end,
-                "Yank file path from project",
-            },
-        },
-        p = {
-            name = "project",
-            p = { ":Telescope projects<cr>", "Switch project" },
-            b = { ":Oil .<cr>", "Browse project" },
-            B = { ":Oil<cr>", "Browse project from here" },
-        },
-        q = {
-            name = "quit/session",
-            q = { ":quit<cr>", "Quit" },
-            s = {
-                function()
-                    require("persistence").load()
-                end,
-                "Restore Session"
-            },
-            l = {
-                function()
-                    require("persistence").load({ last = true })
-                end,
-                "Restore Last Session"
-            },
-            d = {
-                function()
-                    require("persistence").stop()
-                end,
-                "Don't Save Current Session"
-            },
-        },
-        s = {
-            name = "search",
-            p = { ":Rg!<cr>", "Search project" },
-            r = {
-                function()
-                    require("spectre").open_file_search()
-                end,
-                "Search and replace",
-            },
-        },
-        g = {
-            name = "git",
-            g = { ":Neogit<cr>", "Git status" },
-            s = { ":Neogit<cr>", "Git status" },
-            l = { ":DiffviewFileHistory<cr>", "Git log", mode = { "n", "v" } },
-            i = { ":Octo issue list<cr>", "GitHub issues" },
-            p = { ":Octo pr list<cr>", "GitHub pull requests" },
-        },
-        m = {
-            name = "markdown",
-            p = { ":MarkdownPreview<cr>", "Markdown preview" },
-        },
-        o = {
-            name = "open",
-            t = { ":edit ~/Documents/notes/todo.md<cr>", "Todo list" },
-        },
-        [":"] = { ":Legendary<cr>", "Commands" },
+return {
+    -- Session
+    { "<C-q>", ":quit<CR>", desc = "Quit" },
+    { "<C-s>", ":update<CR>", desc = "Save" },
+
+    -- Files
+    {
+        "<Leader><Leader>",
+        function()
+            require("fzf-lua").files({
+                cwd = require("oil").get_current_dir(),
+            })
+        end,
+        desc = "Find file",
     },
-    ["<C-c>"] = { '"+y', "Copy to system clipboard", mode = "v" },
+    { "<Leader>fg", "<Cmd>FzfLua git_files<CR>", desc = "Find git files" },
+    { "-", "<Cmd>Oil<CR>", desc = "Browse project from here" },
+    { "_", "<Cmd>Oil .<CR>", desc = "Browse project" },
+    {
+        "<Leader>.",
+        function()
+            require("harpoon").ui:toggle_quick_menu(require("harpoon"):list())
+        end,
+        desc = "Browse pinned files in project",
+    },
+    {
+        "<Leader>>",
+        function()
+            require("harpoon"):list():add()
+        end,
+        desc = "Add current file to pinned list",
+    },
+
+    -- Buffer
+    { "<Leader>,", "<Cmd>FzfLua buffers<CR>", desc = "Switch buffer" },
+    {
+        "<Leader>bd",
+        function()
+            require("mini.bufremove").delete(0)
+        end,
+        desc = "Delete buffer",
+    },
+    { "<C-Tab>", "<Cmd>bnext<CR>", desc = "Next buffer" },
+    { "<C-S-Tab>", "<Cmd>bprevious<CR>", desc = "Previous buffer" },
+
+    -- Git
+    { "<Leader>gs", "<Cmd>Git<CR>", desc = "Git status" },
+    { "<Leader>gb", "<Cmd>Git blame<CR>", desc = "Git blame" },
+    { "<Leader>gl", "<Cmd>Git log<CR>", desc = "Git log" },
+    { "<Leader>ghb", "<Cmd>silent !gh browse %<CR>", desc = "GitHub browse" },
+    { "<Leader>ghr", "<Cmd>silent !gh repo view --web<CR>", desc = "GitHub repo" },
+    {
+        "<Leader>gd",
+        function()
+            require("mini.diff").toggle_overlay()
+        end,
+        desc = "Git diff overlay",
+    },
+
+    -- Search and replace
+    { "<Leader>/", "<Cmd>FzfLua grep_project<CR>", desc = "Search project (fuzzy)" },
+    { "<Leader>?", "<Cmd>FzfLua live_grep<CR>", desc = "Search project (regex)" },
+    {
+        "<Leader>sr",
+        function()
+            require("grug-far").grug_far({
+                prefills = {
+                    flags = vim.fn.expand("%"),
+                },
+            })
+        end,
+        desc = "Search and replace in current file",
+    },
+    {
+        "<Leader>sR",
+        function()
+            require("grug-far").grug_far({})
+        end,
+        desc = "Search and replace in project",
+    },
+
+    -- Yank
+    { "<C-c>", '"+y', mode = { "n", "v" } , desc = "Yank to clipboard"},
+    { "<Leader>yF", "<Cmd>let @+ = expand('%:p:~')<CR>", desc = "Yank absolute file path to clipboard" },
+    { "<Leader>yf", "<Cmd>let @+ = expand('%')<CR>", desc = "Yank relative file path to clipboard" },
+
+    -- LSP
+    { "K", vim.lsp.buf.hover, desc = "Toggle hover" },
+    { "gd", vim.lsp.buf.definition, desc = "Go to definition" },
+    { "gD", vim.lsp.buf.declaration, desc = "Go to declaration" },
+    { "gi", vim.lsp.buf.implementation, desc = "Go to implementation" },
+    { "go", vim.lsp.buf.type_definition, desc = "Go to type definition" },
+    { "gR", vim.lsp.buf.references, desc = "Go to references" },
+    { "gs", vim.lsp.buf.signature_help, desc = "Show signature" },
+    { "gr", vim.lsp.buf.rename, desc = "Rename symbol" },
+    { "<Leader>=", mode = {"n", "x" }, vim.lsp.buf.format, desc = "Format buffer" },
+    { "<Leader>ca", vim.lsp.buf.code_action, desc = "Code action" },
 }
-
--- Aliases
-keymaps["<Leader>"]["<Leader>"] = keymaps["<Leader>"].f.g
-keymaps["<Leader>"]["/"] = keymaps["<Leader>"].s.p
-keymaps["<Leader>"][","] = keymaps["<Leader>"].b.b
-keymaps["<Leader>"]["<"] = keymaps["<Leader>"].b.B
-keymaps["<Leader>"]["`"] = keymaps["<Leader>"].b.l
-keymaps["<C-s>"] = keymaps["<Leader>"].f.s
-keymaps["<C-q>"] = keymaps["<Leader>"].q.q
-keymaps["<C-Tab>"] = keymaps["<Leader>"].b.l
-keymaps["-"] = keymaps["<Leader>"].p.B
-keymaps["="] = keymaps["<Leader>"].p.B
-keymaps["_"] = keymaps["<Leader>"].p.b
-
--- tabs
--- map("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
--- map("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { desc = "First Tab" })
--- map("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
--- map("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
--- map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
--- map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
-
-require("which-key").register(keymaps)
