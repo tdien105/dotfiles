@@ -11,7 +11,6 @@
     direnv
     docker
     fd
-    fzf
     git
     gnupg
     go

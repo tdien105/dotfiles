@@ -14,6 +14,7 @@
       "tox"
       "pinentry"
       "pyenv"
+      "fzf"
     ];
 
     casks = [
