@@ -70,6 +70,8 @@
         powershell
         sshpass
         tfk8s
+        lua-language-server
+        terraform-ls
       ];
     };
   };

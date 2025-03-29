@@ -1,5 +1,6 @@
 -- Remap space as leader key
 vim.g.mapleader = " "
+vim.keymap.set('n', '<leader>lf', ':e #<CR>', { desc = 'Last edited file' })
 
 return {
     -- Session

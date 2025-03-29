@@ -12,6 +12,16 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 return require("lazy").setup({
+    {
+        'f-person/git-blame.nvim',
+        lazy = false, -- load immediately on startup
+        config = function()
+          -- Enable git blame by default
+          vim.g.gitblame_enabled = 1
+          -- Optional: customize the message
+          vim.g.gitblame_message_template = '<author> • <date> • <summary>'
+          end,
+    },
     -- {{{ Libraries
     {
         "https://github.com/nvim-lua/plenary.nvim",
