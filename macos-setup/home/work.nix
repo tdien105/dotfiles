@@ -15,6 +15,7 @@
       "pinentry"
       "pyenv"
       "fzf"
+      "asdf"
     ];
 
     casks = [
@@ -30,6 +31,8 @@
       "visual-studio-code"
       "zalo"
       "kitty"
+      "microsoft-onenote"
+      "notion"
     ];
   };
 
@@ -72,6 +75,7 @@
         tfk8s
         lua-language-server
         terraform-ls
+        inetutils
       ];
     };
   };
