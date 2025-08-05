@@ -75,13 +75,6 @@ return require("lazy").setup({
         end,
     },
 
-    {
-        "https://github.com/MagicDuck/grug-far.nvim",
-        lazy = true,
-        config = function()
-            require("grug-far").setup({})
-        end,
-    },
     -- }}}
 
     -- {{{ File manager
