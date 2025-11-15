@@ -1,5 +1,5 @@
 {
-  description = "MacOS setup";
+  description = "MacOS setup with modular nix-darwin and home-manager";
 
   inputs = {
     nixpkgs = {
@@ -17,14 +17,13 @@
 
   outputs = { self, nixpkgs, darwin, home-manager }: {
     darwinConfigurations = {
-      "AM-G752H4T49P" = darwin.lib.darwinSystem { #working machine
+      "AM-G752H4T49P" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
-          ./config.nix
+          ./hosts/work.nix
           home-manager.darwinModules.home-manager
-          ./home/work.nix
         ];
-        inputs = { inherit nixpkgs darwin home-manager; };
+        specialArgs = { inherit nixpkgs darwin home-manager; };
       };
     };
   };
