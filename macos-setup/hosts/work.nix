@@ -195,6 +195,12 @@
         lua-language-server
         terraform-ls
       ];
+
+      # Starship prompt - config is managed in ~/.config/starship.toml
+      programs.starship = {
+        enable = true;
+        enableZshIntegration = true;
+      };
     };
   };
 
