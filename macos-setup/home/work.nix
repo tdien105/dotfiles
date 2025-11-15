@@ -16,6 +16,8 @@
       "pyenv"
       "fzf"
       "asdf"
+      "python@3.11"
+      "prettier"
     ];
 
     casks = [
@@ -55,7 +57,6 @@
       # home.file.".config/alacritty/alacritty.yml".text = builtins.readFile ../files/alacritty.toml;
       # home.file.".config/karabiner/karabiner.json".text = builtins.readFile ../files/karabiner.json;
       home.packages = with pkgs; [
-        azure-cli
         kubectx
         sops
         terragrunt

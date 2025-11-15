@@ -42,6 +42,20 @@ return require("lazy").setup({
     },
 
     {
+        "https://github.com/nvim-lualine/lualine.nvim",
+        event = "VeryLazy",
+        config = function()
+            require("lualine").setup({
+                options = {
+                    theme = "onedark",
+                    component_separators = "",
+                    section_separators = "",
+                },
+            })
+        end,
+    },
+
+    {
         "https://github.com/lukas-reineke/indent-blankline.nvim",
         event = "VeryLazy",
         config = function()
@@ -150,10 +164,12 @@ return require("lazy").setup({
                 ts_ls = {},
             }
 
-            local lspconfig = require("lspconfig")
+            -- Use the new vim.lsp.config API for Neovim 0.11+
+            local capabilities = require("blink.cmp").get_lsp_capabilities()
             for server, config in pairs(servers) do
-                config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
-                lspconfig[server].setup(config)
+                config.capabilities = capabilities
+                vim.lsp.config[server] = config
+                vim.lsp.enable(server)
             end
 
             -- HACK manually start LSP server after lazy load
@@ -200,6 +216,30 @@ return require("lazy").setup({
             require("nvim-autopairs").setup()
         end,
     },
+
+    {
+        "https://github.com/stevearc/conform.nvim",
+        event = "BufWritePre",
+        config = function()
+            require("conform").setup({
+                formatters_by_ft = {
+                    lua = { "stylua" },
+                    python = { "black" },
+                    javascript = { "prettier" },
+                    typescript = { "prettier" },
+                    javascriptreact = { "prettier" },
+                    typescriptreact = { "prettier" },
+                    json = { "prettier" },
+                    yaml = { "prettier" },
+                    markdown = { "prettier" },
+                    go = { "gofmt" },
+                    rust = { "rustfmt" },
+                    terraform = { "terraform_fmt" },
+                },
+                format_on_save = false, -- disable auto-format, use keymap instead
+            })
+        end,
+    },
     -- }}}
 
     -- {{{ Git
@@ -217,29 +257,6 @@ return require("lazy").setup({
     },
     -- }}}
 
-    -- {{{ Motions
-    {
-        "https://github.com/folke/flash.nvim",
-        event = "VeryLazy",
-        config = function()
-            require("flash").setup({
-                modes = {
-                    search = {
-                        enabled = true,
-                    },
-                    char = {
-                        enabled = false,
-                    },
-                },
-                highlight = {
-                    groups = {
-                        label = "Question",
-                    },
-                },
-            })
-        end,
-    },
-
     {
         "https://github.com/echasnovski/mini.surround",
         event = "VeryLazy",
@@ -250,6 +267,17 @@ return require("lazy").setup({
     -- }}}
 
     -- {{{ Miscellaneous
+    {
+        "https://github.com/folke/persistence.nvim",
+        event = "BufReadPre",
+        config = function()
+            require("persistence").setup({
+                dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"),
+                options = { "buffers", "curdir", "tabpages", "winsize" },
+            })
+        end,
+    },
+
     {
         "https://github.com/farmergreg/vim-lastplace",
         event = "BufReadPost",
@@ -289,4 +317,18 @@ return require("lazy").setup({
         keys = require("keymaps"),
     },
     -- }}}
+    --
+    -- kitty-scrollback.nvim
+    {
+        'mikesmithgh/kitty-scrollback.nvim',
+        enabled = true,
+        lazy = true,
+        cmd = { 'KittyScrollbackGenerateKittens', 'KittyScrollbackCheckHealth', 'KittyScrollbackGenerateCommandLineEditing' },
+        event = { 'User KittyScrollbackLaunch' },
+        -- version = '*', -- latest stable version, may have breaking changes if major version changed
+        -- version = '^6.0.0', -- pin major version, include fixes and features that do not have breaking changes
+        config = function()
+          require('kitty-scrollback').setup()
+        end,
+    },
 })

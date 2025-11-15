@@ -61,26 +61,31 @@ return {
         desc = "Git diff overlay",
     },
 
-    -- Search and replace
+    -- Search
     { "<Leader>/", "<Cmd>FzfLua grep_project<CR>", desc = "Search project (fuzzy)" },
     { "<Leader>?", "<Cmd>FzfLua live_grep<CR>", desc = "Search project (regex)" },
+
+    -- Session
     {
-        "<Leader>sr",
+        "<Leader>qs",
         function()
-            require("grug-far").grug_far({
-                prefills = {
-                    flags = vim.fn.expand("%"),
-                },
-            })
+            require("persistence").load()
         end,
-        desc = "Search and replace in current file",
+        desc = "Restore session",
     },
     {
-        "<Leader>sR",
+        "<Leader>ql",
         function()
-            require("grug-far").grug_far({})
+            require("persistence").load({ last = true })
         end,
-        desc = "Search and replace in project",
+        desc = "Restore last session",
+    },
+    {
+        "<Leader>qd",
+        function()
+            require("persistence").stop()
+        end,
+        desc = "Don't save current session",
     },
 
     -- Yank
@@ -97,6 +102,13 @@ return {
     { "gR", vim.lsp.buf.references, desc = "Go to references" },
     { "gs", vim.lsp.buf.signature_help, desc = "Show signature" },
     { "gr", vim.lsp.buf.rename, desc = "Rename symbol" },
-    { "<Leader>=", mode = {"n", "x" }, vim.lsp.buf.format, desc = "Format buffer" },
+    {
+        "<Leader>=",
+        mode = { "n", "x" },
+        function()
+            require("conform").format({ lsp_fallback = true })
+        end,
+        desc = "Format buffer",
+    },
     { "<Leader>ca", vim.lsp.buf.code_action, desc = "Code action" },
 }

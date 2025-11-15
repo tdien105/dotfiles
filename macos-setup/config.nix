@@ -38,9 +38,7 @@
 
   fonts = {
     packages = with pkgs; [
-      (nerdfonts.override {
-        fonts = [ "FiraCode" ];
-      })
+      nerd-fonts.fira-code
     ];
   };
 
@@ -85,8 +83,11 @@
   #   enable = true;
   # };
 
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
+  # Set primary user for system defaults
+  system.primaryUser = "dphan";
+
+  # Fix GID for nixbld group (changed from 30000 to 350 in 25.05)
+  ids.gids.nixbld = 350;
 
   nix = {
     # configureBuildUsers = true;
@@ -110,7 +111,7 @@
     promptInit = "";
   };
 
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
